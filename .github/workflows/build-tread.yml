@@ -4,7 +4,8 @@ name: Сборка tread APK
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 permissions:
   contents: read
@@ -12,18 +13,19 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Получить файлы проекта
         uses: actions/checkout@v4
 
-      - name: Проверить и распаковать архив
-  run: |
-    echo "Файлы в репозитории:"
-    ls -lah
-    echo "Проверка архива:"
-    file tread_github_android.zip
-    unzip -t tread_github_android.zip
-    unzip -q tread_github_android.zip -d .
+      - name: Проверить архив
+        run: |
+          ls -lah
+          file tread_github_android.zip
+          unzip -t tread_github_android.zip
+
+      - name: Распаковать архив
+        run: unzip -q tread_github_android.zip
 
       - name: Установить Java
         uses: actions/setup-java@v4
